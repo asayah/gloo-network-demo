@@ -1,0 +1,33 @@
+---
+apiVersion: admin.gloo.solo.io/v2
+kind: WorkspaceSettings
+metadata:
+  name: bookinfo
+  namespace: bookinfo
+spec:
+  exportTo: []
+  options:
+    serviceIsolation:
+      enabled: true
+  exportTo:  
+  - workspaces:
+    - name: "client"
+    resources:
+    - kind: SERVICE  
+      name: productpage
+
+---      
+
+apiVersion: admin.gloo.solo.io/v2
+kind: WorkspaceSettings
+metadata:
+  name: client
+  namespace: client
+spec:
+  exportTo: []
+  options:
+    serviceIsolation:
+      enabled: true
+  importFrom:
+  - workspaces:
+    - name: bookinfo      

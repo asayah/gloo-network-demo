@@ -1,0 +1,1 @@
+kubectl -n client debug -i pods/$(kubectl get pod  -l app=sleep -A -o jsonpath='{.items[0].metadata.name}') --image=curlimages/curl -- curl -v http://productpage.bookinfo.svc.cluster.local:9080/productpage

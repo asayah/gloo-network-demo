@@ -1,0 +1,16 @@
+In certain cases we want services from different workspace to communicate, for this we need to establish the relationship between the workspaces, this can be very granular (selecting specific services for example) or can be more flexible. 
+
+Run the following example (note the import/export in the workspace settings):
+
+```
+kubectl apply -f ./4-relationship-workspace
+```
+
+
+If we make the call between the sleep service and the productpage services now it should work: 
+
+```bash
+kubectl -n client debug -i pods/$(kubectl get pod  -l app=sleep -A -o jsonpath='{.items[0].metadata.name}') --image=curlimages/curl -- curl -v http://productpage.bookinfo.svc.cluster.local:9080/productpage
+```
+
+

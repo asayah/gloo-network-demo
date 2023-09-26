@@ -1,0 +1,49 @@
+
+apiVersion: admin.gloo.solo.io/v2
+kind: Workspace
+metadata:
+  name: bookinfo
+  namespace: gloo-mesh
+spec:
+  workloadClusters:
+  - name: '*'    
+    namespaces:
+    - name: 'bookinfo'
+---    
+
+apiVersion: admin.gloo.solo.io/v2
+kind: Workspace
+metadata:
+  name: client
+  namespace: gloo-mesh
+spec:
+  workloadClusters:
+  - name: '*'    
+    namespaces:
+    - name: 'client'    
+
+
+---
+apiVersion: admin.gloo.solo.io/v2
+kind: WorkspaceSettings
+metadata:
+  name: bookinfo
+  namespace: bookinfo
+spec:
+  exportTo: []
+  options:
+    serviceIsolation:
+      enabled: false
+
+---      
+
+apiVersion: admin.gloo.solo.io/v2
+kind: WorkspaceSettings
+metadata:
+  name: client
+  namespace: client
+spec:
+  exportTo: []
+  options:
+    serviceIsolation:
+      enabled: false

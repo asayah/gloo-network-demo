@@ -1,0 +1,19 @@
+Let's establish zero trust between the services, for this we will use the workspace concept of Gloo Mesh, when creating A workspace and using service Isolation, traffic between Services from different workspaces will not be allowed
+Apply the following manifest: 
+
+
+```
+kubectl apply -f ./3-workspaces-zero-trust
+```
+
+
+Now if you make a call from the sleep services in the client workspace to the productpage service in the bookinfo namespaces it will not work: 
+
+```
+
+kubectl -n client debug -i pods/$(kubectl get pod  -l app=sleep -A -o jsonpath='{.items[0].metadata.name}') --image=curlimages/curl -- curl -v http://productpage.bookinfo.svc.cluster.local:9080/productpage
+
+```
+
+Gloo Mesh create the right Istio configuration to enforce zero trust without having to manage all the Istio configuration needed, if Gloo Network is installed, the workspace will also result in a NetworkPolicy enforcing the isolation at the CNI level as well. 
+
